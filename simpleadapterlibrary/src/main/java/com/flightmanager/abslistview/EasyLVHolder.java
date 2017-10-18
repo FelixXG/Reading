@@ -3,6 +3,7 @@ package com.flightmanager.abslistview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -11,12 +12,15 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flightmanager.helper.ViewHelper;
+import com.flightmanager.recyclerview.EasyRVHolder;
 
-public class EasyLVHolder implements ViewHelper.AbsListView<EasyLVHolder> {
+public class EasyLVHolder extends EasyRVHolder implements ViewHelper.AbsListView<EasyLVHolder> {
 
     /**
      * findViewById后保存view集合
@@ -43,6 +47,10 @@ public class EasyLVHolder implements ViewHelper.AbsListView<EasyLVHolder> {
 
     protected EasyLVHolder(){
 
+    }
+
+    public EasyLVHolder(Context context, int layoutId, View itemView) {
+        super(context, layoutId, itemView);
     }
 
     public <BVH extends EasyLVHolder>BVH get(Context context,int position,View convertView,ViewGroup parent,int layoutId){
@@ -121,71 +129,108 @@ public class EasyLVHolder implements ViewHelper.AbsListView<EasyLVHolder> {
 
     @Override
     public EasyLVHolder setBackgroundColorRes(int viewId, int colorRes) {
-        return null;
+        View view=getView(viewId);
+        view.setBackgroundResource(colorRes);
+        return this;
     }
 
     @Override
     public EasyLVHolder setImageDrawable(int viewId, Drawable drawable) {
-        return null;
+        ImageView view=getView(viewId);
+        view.setImageDrawable(drawable);
+        return this;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public EasyLVHolder setImageDrawableRes(int viewId, int drawableRes) {
-        return null;
+        Drawable drawable=mContext.getResources().getDrawable(drawableRes,null);
+
+        return setImageDrawable(viewId,drawable);
     }
 
     @Override
     public EasyLVHolder setImageUrl(int viewId, String imgUrl) {
-        return null;
+        return this;
     }
 
     @Override
     public EasyLVHolder setImageBitmap(int viewId, Bitmap imgBitmap) {
-        return null;
+        ImageView view=getView(viewId);
+        view.setImageBitmap(imgBitmap);
+        return this;
     }
 
     @Override
     public EasyLVHolder setVisible(int viewId, boolean visible) {
-        return null;
+        View view=getView(viewId);
+        view.setVisibility(visible?View.VISIBLE:View.GONE);
+        return this;
     }
 
     @Override
     public EasyLVHolder setVisible(int viewId, int visible) {
-        return null;
+        View view=getView(viewId);
+        view.setVisibility(visible);
+        return this;
     }
 
     @Override
     public EasyLVHolder setTag(int viewId, Object tag) {
-        return null;
+        View view=getView(viewId);
+        view.setTag(tag);
+        return this;
     }
 
     @Override
     public EasyLVHolder setTag(int viewId, int key, Object tag) {
-        return null;
+        View view=getView(viewId);
+        view.setTag(key,tag);
+        return this;
     }
 
     @Override
     public EasyLVHolder setChecked(int viewId, boolean checked) {
-        return null;
+        Checkable view=getView(viewId);
+        view.setChecked(checked);
+        return this;
     }
 
     @Override
     public EasyLVHolder setAlpha(int viewId, float value) {
-        return null;
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB){
+            getView(viewId).setAlpha(value);
+        }else{
+            AlphaAnimation alphaAnimation=new AlphaAnimation(value,value);//开始透明度   结束透明度
+            alphaAnimation.setDuration(0);//动画持续时间
+            alphaAnimation.setFillAfter(true);//设置动画结束之后的状态是否是动画的最终状态，true,表示是保持动画结束时的最终状态
+            getView(viewId).startAnimation(alphaAnimation);
+        }
+        return this;
     }
 
     @Override
     public EasyLVHolder setTypeface(int viewId, Typeface typeface) {
-        return null;
+        TextView view=getView(viewId);
+        view.setTypeface(typeface);
+        view.setPaintFlags(view.getPaintFlags()| Paint.SUBPIXEL_TEXT_FLAG);
+        return this;
     }
 
     @Override
     public EasyLVHolder setTypeface(Typeface typeface, int... viewIds) {
-        return null;
+        for(int viewId : viewIds){
+            TextView view=getView(viewId);
+            view.setTypeface(typeface);
+            view.setPaintFlags(view.getPaintFlags()| Paint.SUBPIXEL_TEXT_FLAG);
+        }
+        return this;
     }
 
     @Override
     public EasyLVHolder setOnClickListener(int viewId, View.OnClickListener listener) {
-        return null;
+        View view=getView(viewId);
+        view.setOnClickListener(listener);
+        return this;
     }
 }
