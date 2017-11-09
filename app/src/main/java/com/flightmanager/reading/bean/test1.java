@@ -1,5 +1,5 @@
 package com.flightmanager.reading.bean;
 
 
-public class test {
+public class test1 {
 }
