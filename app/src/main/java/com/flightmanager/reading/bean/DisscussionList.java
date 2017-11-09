@@ -7,8 +7,8 @@ import com.flightmanager.reading.bean.base.Base;
 
 import java.util.List;
 
-public class DiscussionList extends Base {
-    protected DiscussionList(Parcel in) {
+public class DisscussionList extends Base {
+    protected DisscussionList(Parcel in) {
         super(in);
     }
     /**
