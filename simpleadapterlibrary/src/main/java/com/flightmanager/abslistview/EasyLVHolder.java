@@ -18,9 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flightmanager.helper.ViewHelper;
-import com.flightmanager.recyclerview.EasyRVHolder;
 
-public class EasyLVHolder extends EasyRVHolder implements ViewHelper.AbsListView<EasyLVHolder> {
+public class EasyLVHolder  implements ViewHelper.AbsListView<EasyLVHolder> {
 
     /**
      * findViewById后保存view集合
@@ -33,7 +32,7 @@ public class EasyLVHolder extends EasyRVHolder implements ViewHelper.AbsListView
     protected int mLayoutId;
     protected Context mContext;
 
-    public EasyLVHolder(Context mContext, int mPosition, ViewGroup parent, int mLayoutId) {
+    protected EasyLVHolder(Context mContext, int mPosition, ViewGroup parent, int mLayoutId) {
         this.mConvertView=mConvertViews.get(mLayoutId);
         this.mPosition = mPosition;
         this.mLayoutId = mLayoutId;
@@ -45,12 +44,8 @@ public class EasyLVHolder extends EasyRVHolder implements ViewHelper.AbsListView
         }
     }
 
-    protected EasyLVHolder(){
 
-    }
-
-    public EasyLVHolder(Context context, int layoutId, View itemView) {
-        super(context, layoutId, itemView);
+    protected EasyLVHolder() {
     }
 
     public <BVH extends EasyLVHolder>BVH get(Context context,int position,View convertView,ViewGroup parent,int layoutId){

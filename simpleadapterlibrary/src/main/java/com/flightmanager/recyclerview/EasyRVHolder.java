@@ -36,6 +36,8 @@ public class EasyRVHolder extends RecyclerView.ViewHolder implements ViewHelper.
         mConvertView.setTag(this);
     }
 
+
+
     public <V extends View> V getView(int viewId){
         View view=mViews.get(viewId);
         if(view==null){
